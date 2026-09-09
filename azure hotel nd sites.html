@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure Hotel & Suites | Luxury Accommodation in New Oko-Oba, Agege, Lagos</title>
+    <meta name="description" content="Crafted for your comfort, Azure Hotel & Suites in Agege, Lagos offers luxurious accommodation, fine dining, top-notch security, and serene ambience for business and leisure stays.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        azure: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            200: '#bae0fd',
+                            300: '#7cc7fb',
+                            400: '#36a9f7',
+                            500: '#0c8de4',
+                            600: '#0270c1',
+                            700: '#03599d',
+                            800: '#074c82',
+                            900: '#0c3f6d',
+                            950: '#082848',
+                        },
+                        gold: {
+                            400: '#e5c158',
+                            500: '#d4af37',
+                            600: '#b89228',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- React, React DOM, Babel -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(12, 141, 228, 0.4);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(12, 141, 228, 0.7);
+        }
+        .backdrop-blur-custom {
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        /* High definition image presentation */
+        img {
+            max-width: 100%;
+            height: auto;
+            vertical-align: middle;
+            font-style: italic;
+            background-repeat: no-repeat;
+            background-size: cover;
+            shape-margin: 0.75rem;
+        }
+        .img-hd {
+            backface-visibility: hidden;
+            transform: translateZ(0);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased bg-stone-50 text-stone-800 dark:bg-stone-950 dark:text-stone-100 transition-colors duration-300">
+
+    <!-- React Root Mount -->
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useMemo } = React;
+
+        // --- OFFICIAL HOTEL DATA ---
+        const HOTEL_DATA = {
+            name: "Azure Hotel & Suites",
+            tagline: "Crafted for your comfort.",
+            address: "New Oko-Oba, 54 Progress College Rd, Abule Egba, Agege 100215, Lagos, Nigeria",
+            phone: "0913 137 5411",
+            phoneRaw: "2349131375411",
+            whatsapp: "2349131375411",
+            rating: "4.3",
+            reviewsCount: 112,
+            instagram: "@azure.hotels",
+            instagramUrl: "https://instagram.com/azure.hotels",
+            whatsappUrl: "https://wa.me/2349131375411?text=Hello%20Azure%20Hotel%20%26%20Suites,%20I%20would%20like%20to%20make%20an%20enquiry",
+            positioning: "Crafted for your comfort, Azure Hotel and Suites is the perfect destination for business and leisure. From luxurious suites to cozy, budget-friendly stays..."
+        };
+
+        // --- HIGH DEFINITION PHOTOGRAPHY MANIFEST WITH HD FALLBACKS ---
+        const IMAGE_MANIFEST = [
+            { 
+                id: "azure-01", 
+                url: "https://i.ibb.co/Z1JsHHDP/658b5f1c-57b1-4493-9da3-77d29b6ff330.png", 
+                fallbackUrl: "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=85",
+                role: "room", 
+                alt: "Guest room breakfast in bed experience", 
+                title: "In-Room Dining Experience" 
+            },
+            { 
+                id: "azure-02", 
+                url: "https://i.ibb.co/YBMsH9PV/a9038797-343f-41b8-b136-63b220cb3c6d.png", 
+                fallbackUrl: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=85",
+                role: "interiors", 
+                alt: "Hotel corridor and warm interior lighting", 
+                title: "Elegantly Lit Walkways" 
+            },
+            { 
+                id: "azure-03", 
+                url: "https://i.ibb.co/tTtFx3tn/4b47ccd2-d1f5-46dd-9977-185fdfc65733.png", 
+                fallbackUrl: "https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=1200&q=85",
+                role: "interiors", 
+                alt: "Modern architectural staircase interior", 
+                title: "Architectural Staircase" 
+            },
+            { 
+                id: "azure-04", 
+                url: "https://i.ibb.co/4wCPhKw5/460c387e-6425-42f6-8415-815daa8d69b2.png", 
+                fallbackUrl: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=85",
+                role: "room", 
+                alt: "Plush king bedding with cozy pillows", 
+                title: "Comfort Bedding Layout" 
+            },
+            { 
+                id: "azure-05", 
+                url: "https://i.ibb.co/k64Cp0cB/56cb0116-fe2f-46d0-a053-420f6b6095e7.png", 
+                fallbackUrl: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=85",
+                role: "exterior", 
+                alt: "Azure Hotel front entrance facade", 
+                title: "Hotel Grand Entrance" 
+            },
+            { 
+                id: "azure-06", 
+                url: "https://i.ibb.co/V0DbvCvW/1b2d3a23-e845-40f2-b648-a372119e0fe6.png", 
+                fallbackUrl: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=85",
+                role: "interiors", 
+                alt: "Luxury bathroom vanity and finishes", 
+                title: "Modern Ensuite Bathroom" 
+            },
+            { 
+                id: "azure-07", 
+                url: "https://i.ibb.co/B52CGCLt/b2308bcb-41ef-4801-80c5-0685e14e2c17.png", 
+                fallbackUrl: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=85",
+                role: "interiors", 
+                alt: "Club 526 Lounge & Bar", 
+                title: "Club 526 Executive Lounge" 
+            },
+            { 
+                id: "azure-08", 
+                url: "https://i.ibb.co/Rp5y0TxT/ba22aa4a-0327-41c5-9fc9-6708426e2695.png", 
+                fallbackUrl: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1200&q=85",
+                role: "interiors", 
+                alt: "Main Lobby and Reception Area", 
+                title: "Warm Welcoming Reception" 
+            },
+            { 
+                id: "azure-09", 
+                url: "https://i.ibb.co/TqvKRbY9/5e2a73e9-af40-4dce-985c-910d391d6582.png", 
+                fallbackUrl: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=85",
+                role: "room", 
+                alt: "Executive Room suite setting", 
+                title: "Executive Deluxe Suite" 
+            },
+            { 
+                id: "azure-10", 
+                url: "https://i.ibb.co/cd6Dfj5/2b6222d1-2836-4d7d-a1b9-6c61638538a8.png", 
+                fallbackUrl: "https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=1200&q=85",
+                role: "interiors", 
+                alt: "Hotel interior architectural walkway", 
+                title: "Clean Interior Corridor" 
+            },
+            { 
+                id: "azure-11", 
+                url: "https://i.ibb.co/bRDDJ9vq/dca6138d-6da1-477e-a03d-c073ffb66409.png", 
+                fallbackUrl: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1200&q=85",
+                role: "exterior", 
+                alt: "Exterior night view of Azure Hotel", 
+                title: "Evening Hotel Facade" 
+            },
+            { 
+                id: "azure-12", 
+                url: "https://i.ibb.co/pBQ9QgnX/63bb67e6-60a5-47fe-b269-3a55b8efa4ae.png", 
+                fallbackUrl: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=85",
+                role: "dining", 
+                alt: "Freshly prepared hotel cuisine", 
+                title: "Artisanal Hotel Dining" 
+            },
+            { 
+                id: "azure-13", 
+                url: "https://i.ibb.co/rG47vS2G/87966461-05c7-4743-b9b6-b6c817dc2cee.png", 
+                fallbackUrl: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=1200&q=85",
+                role: "exterior", 
+                alt: "Spacious and secure car park area", 
+                title: "Secure Parking Compound" 
+            },
+            { 
+                id: "azure-14", 
+                url: "https://i.ibb.co/fdWdvsJx/cda98eee-f98e-48af-a8b7-7199d7608ddc.png", 
+                fallbackUrl: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1200&q=85",
+                role: "room", 
+                alt: "Master bedroom suite with premium bedding", 
+                title: "Presidential Master Room" 
+            },
+            { 
+                id: "azure-15", 
+                url: "https://i.ibb.co/RGcXHMZC/b8d604ce-b397-4c89-86e3-6864fba7bc3c.png", 
+                fallbackUrl: "https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=1200&q=85",
+                role: "interiors", 
+                alt: "Modern glass shower unit", 
+                title: "Spacious Shower Facilities" 
+            },
+            { 
+                id: "azure-16", 
+                url: "https://i.ibb.co/Hf5shxLt/efc99097-4b67-40b6-a3b8-3d0ed700b8b3.png", 
+                fallbackUrl: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1200&q=85",
+                role: "interiors", 
+                alt: "Front desk guest reception counter", 
+                title: "24/7 Guest Services Desk" 
+            },
+            { 
+                id: "azure-17", 
+                url: "https://i.ibb.co/j9s4SNmQ/3324bb6c-b694-49b0-acf5-a16c9673ef48.png", 
+                fallbackUrl: "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=1200&q=85",
+                role: "dining", 
+                alt: "Restaurant seating area", 
+                title: "In-House Restaurant Ambience" 
+            },
+            { 
+                id: "azure-18", 
+                url: "https://i.ibb.co/4RLf89z0/9f29d129-c5b6-4bab-9719-efebc1f99aaa.png", 
+                fallbackUrl: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=85",
+                role: "exterior", 
+                alt: "Quiet outdoor courtyard area", 
+                title: "Serene Outdoor Courtyard" 
+            },
+            { 
+                id: "azure-19", 
+                url: "https://i.ibb.co/Xx7R7MCW/74a15cc8-3903-49c1-8547-80a0f43ba270.png", 
+                fallbackUrl: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&q=85",
+                role: "room", 
+                alt: "Suite living room seating space", 
+                title: "Cozy Suite Lounge Area" 
+            }
+        ];
+
+        // --- OFFICIAL POSITIVE REVIEWS DATASET ---
+        const REVIEWS_DATASET = [
+            { id: 1, name: "Paul Modo", rating: 5, date: "a year ago", text: "I stayed in room 201. The room was perfect, my little baby liked the room and the mirrors (both outside the door and inside the room).", topics: ["lovely rooms", "comfort"] },
+            { id: 2, name: "Godwin Balogun", rating: 5, date: "5 months ago", text: "Had a top-notch experience. The environment is so nice", roomsRating: 5, topics: ["cleanliness", "comfort"] },
+            { id: 3, name: "Temitayo Dahunsi", rating: 5, date: "9 months ago", text: "Beautiful interior, nice ambience, quite polite staff, and quiet neighbourhood.", topics: ["polite staff", "aesthetically beautiful"] },
+            { id: 4, name: "Francis adeoti", rating: 5, date: "2 years ago", text: "Beautiful hotel at a decent location. Clean environment, decent security, and there is quite a spacious parking area.", topics: ["location", "cleanliness", "security", "compound"] },
+            { id: 5, name: "Oy Luxury furniture", rating: 5, date: "a year ago", text: "This was my best hospitality experience, from their rooms to their walkways, to the car park, club 526, the reception, their staff responding to customers is 100% on point.", topics: ["walkway", "polite staff", "compound"] },
+            { id: 6, name: "Elijah Force", rating: 5, date: "3 years ago", text: "This hotel is a beautiful and new hotel in Agege and is very remarkable", topics: ["aesthetically beautiful"] },
+            { id: 7, name: "Orisakwe Chinedu", rating: 5, date: "3 years ago", text: "When I was driven into the compound, I was shocked. I never imagined a hotel with this level of excellence would be on the street where I usually pass almost daily.", topics: ["compound", "value for money"] },
+            { id: 8, name: "HG G", rating: 5, date: "3 years ago", text: "Like my friend said, island standard in the trenches. Aside that, is an home away from home, lovely rooms, great customer service", topics: ["lovely rooms", "polite staff"] },
+            { id: 9, name: "John Ononogbu", rating: 5, date: "a year ago", text: "Amazing place to be. Nice foods, warm reception and staffs. Beautiful and suave ambience. Had Rice and Turkey with Milkshakes. Nice place to be.", topics: ["polite staff", "aesthetically beautiful"] },
+            { id: 10, name: "Turah Gilbert", rating: 5, date: "2 years ago", text: "if you wanna take same day wedding shoot , I advice you lodge here and take your professional pictures & watch them come out extremely good . I won't say more than that", topics: ["aesthetically beautiful"] },
+            { id: 11, name: "Ifeomagoodlife", rating: 5, date: "3 years ago", text: "This place is so aesthetically beautiful. I love love love and love again. From the entrance to the lobby, reception, the walkway, the rooms they are beautifully clean. I will recommend with my full chest.", topics: ["aesthetically beautiful", "cleanliness", "walkway"] },
+            { id: 12, name: "ADENIJI MARIAM", rating: 5, date: "3 years ago", text: "A very lovely place to be, I enjoy every bit of the time spent, all there staff are well mannered and ready to assist with a cheerful smile....kudos to the management", topics: ["polite staff"] },
+            { id: 13, name: "Taiwo Rhoda Awotula", rating: 5, date: "3 years ago", text: "This place actually wowed my expectations, serene and beautiful environment, excellent and world class interiors, customer service brilliant", topics: ["polite staff", "comfort"] },
+            { id: 14, name: "Oriola Olamilekan", rating: 5, date: "a year ago", text: "Very visually captivating environment with top notch professional service delivery", topics: ["aesthetically beautiful", "polite staff"] },
+            { id: 15, name: "Mabel Robert", rating: 5, date: "7 months ago", text: "Soft spot", topics: ["comfort"] },
+            { id: 16, name: "Erikefe Francis", rating: 5, date: "3 years ago", text: "Excellent Hotel and great services , the amenities are the best in such a location .", roomsRating: 5, topics: ["location", "value for money"] },
+            { id: 17, name: "osunlalu omoniyi", rating: 5, date: "3 years ago", text: "Craft for your Comfort, away from home but still at home, with an all-round connection, good services, and management", topics: ["comfort"] },
+            { id: 18, name: "Ojodaniel Seyi", rating: 5, date: "3 years ago", text: "Azure hotel is a very nice place to be, yes of course it's Worth your money", roomsRating: 5, topics: ["value for money"] },
+            { id: 19, name: "Aholic Jersey shore 2", rating: 5, date: "10 months ago", text: "I give them 100/100", topics: ["value for money"] },
+            { id: 20, name: "kingsley michael", rating: 5, date: "3 years ago", text: "Experienced heaven in Abule Egba, 5 star, really a Crafted place for comfort.", topics: ["comfort", "location"] },
+            { id: 21, name: "Tijani Samson", rating: 5, date: "2 years ago", text: "A nice place to have the best relaxation", tripType: "Vacation", topics: ["comfort"] },
+            { id: 22, name: "Chinedu Okeh", rating: 5, date: "3 years ago", text: "Nice place to be. Secured and hospitable", roomsRating: 5, topics: ["security"] },
+            { id: 23, name: "Dr. Olajoju T. Soniran", rating: 5, date: "2 years ago", text: "Neat environment and comfortable room", topics: ["cleanliness", "comfort"] },
+            { id: 24, name: "Ifeoluwawumi Sobowale", rating: 5, date: "3 years ago", text: "Lovely place, great services", topics: ["polite staff"] },
+            { id: 25, name: "Temilola Olaleye", rating: 5, date: "a year ago", text: "Very nice", topics: ["comfort"] },
+            { id: 26, name: "Gabito Akpama", rating: 5, date: "a year ago", text: "It’s a great hotel", topics: ["comfort"] },
+            { id: 27, name: "Olatunde Emmanuel", rating: 5, date: "3 years ago", text: "Good value for your money...", tripType: "Vacation", topics: ["value for money"] },
+            { id: 28, name: "Daniel Felix Lawal", rating: 5, date: "2 years ago", text: "The place is so wonderful.", roomsRating: 5, topics: ["comfort"] },
+            { id: 29, name: "Okeke Chinedu", rating: 5, date: "3 years ago", text: "Comfortable and 5 star standard", topics: ["comfort"] },
+            { id: 30, name: "Ibukun Siwoku", rating: 5, date: "3 years ago", text: "Exceptionally clean and classy", topics: ["cleanliness"] },
+            { id: 31, name: "Eazy Money", rating: 5, date: "a month ago", text: "Good customer service, very quiet and luxurious.", tripType: "Vacation", topics: ["polite staff", "comfort"] }
+        ];
+
+        const MENTIONED_TOPICS = [
+            { label: "lovely rooms", count: 2 },
+            { label: "polite staff", count: 3 },
+            { label: "value for money", count: 2 },
+            { label: "compound", count: 2 },
+            { label: "security", count: 2 },
+            { label: "aesthetically beautiful", count: 2 },
+            { label: "walkway", count: 2 },
+            { label: "cleanliness", count: 5 },
+            { label: "comfort", count: 3 },
+            { label: "location", count: 3 }
+        ];
+
+        const Icons = {
+            Logo: () => (
+                <svg className="w-10 h-10 text-azure-700 dark:text-azure-400 transform group-hover:scale-105 transition-transform" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100" height="100" rx="22" className="fill-azure-900 dark:fill-azure-950" />
+                    {/* Architectural Crown Arch */}
+                    <path d="M26 68L50 24L74 68" stroke="#D4AF37" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+                    {/* Inner Arch Accent */}
+                    <path d="M36 68L50 42L64 68" stroke="#36A9F7" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                    {/* Crown Peak Circle */}
+                    <circle cx="50" cy="20" r="4" fill="#D4AF37" />
+                    {/* Horizontal Bar */}
+                    <line x1="33" y1="58" x2="67" y2="58" stroke="#D4AF37" strokeWidth="4" strokeLinecap="round" />
+                </svg>
+            ),
+            Sun: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>,
+            Moon: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>,
+            Phone: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>,
+            WhatsApp: () => <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>,
+            Instagram: () => (
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+            ),
+            Star: ({ fill = true }) => (
+                <svg className={`w-4 h-4 ${fill ? 'text-amber-400 fill-amber-400' : 'text-stone-300 dark:text-stone-600'}`} viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+            ),
+            Calendar: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>,
+            MapPin: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>,
+            Menu: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" /></svg>,
+            Close: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>,
+            Check: () => <svg className="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>,
+            ChevronRight: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>,
+            ChevronLeft: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>,
+            Shield: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>,
+            // Replaced Sparkles/Crystal icon with Crown & Award Badge Icons
+            Crown: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 16l-2-9 5 3 4-5 4 5 5-3-2 9H5z" /></svg>,
+            Award: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>,
+            Search: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>,
+            Users: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>,
+            Bed: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v11m0-4h18m0 4v-8a2 2 0 00-2-2H5a2 2 0 00-2 2v8m18-4v4M7 9a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+        };
+
+        // Custom Image Component with smooth loading and clear HD fallback
+        function HDImage({ src, fallback, alt, className }) {
+            const [imgSrc, setImgSrc] = useState(src);
+            const [loaded, setLoaded] = useState(false);
+
+            return (
+                <img
+                    src={imgSrc}
+                    alt={alt}
+                    onLoad={() => setLoaded(true)}
+                    onError={() => {
+                        if (fallback && imgSrc !== fallback) {
+                            setImgSrc(fallback);
+                        }
+                    }}
+                    className={`img-hd object-cover object-center ${loaded ? 'opacity-100' : 'opacity-80 scale-100'} ${className}`}
+                />
+            );
+        }
+
+        // Utility helper to route reservation inquiries directly to WhatsApp
+        const sendWhatsAppAvailabilityRequest = ({ checkIn, checkOut, guests, roomType }) => {
+            let msg = `Hello Azure Hotel & Suites,\n\nI would like to check room availability for my stay:`;
+            if (checkIn) msg += `\nCheck-In: ${checkIn}`;
+            if (checkOut) msg += `\nCheck-Out: ${checkOut}`;
+            if (guests) msg += `\nGuests: ${guests}`;
+            if (roomType) msg += `\nPreferred Room: ${roomType}`;
+            msg += `\n\nPlease confirm availability and daily rates. Thank you!`;
+
+            const url = `https://wa.me/${HOTEL_DATA.whatsapp}?text=${encodeURIComponent(msg)}`;
+            window.open(url, '_blank');
+        };
+
+        function App() {
+            const [currentPage, setCurrentPage] = useState('home');
+            const [darkMode, setDarkMode] = useState(() => {
+                const saved = localStorage.getItem('azure_theme');
+                if (saved) return saved === 'dark';
+                return window.matchMedia('(prefers-color-scheme: dark)').matches;
+            });
+            const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+            const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+            
+            // Booking state
+            const [booking, setBooking] = useState({
+                checkIn: '',
+                checkOut: '',
+                guests: '1 Adult',
+                roomType: 'Executive Room'
+            });
+
+            useEffect(() => {
+                if (darkMode) {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('azure_theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('azure_theme', 'light');
+                }
+            }, [darkMode]);
+
+            const navigateTo = (page) => {
+                setCurrentPage(page);
+                setMobileMenuOpen(false);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+
+            const handleModalSubmit = (e) => {
+                e.preventDefault();
+                sendWhatsAppAvailabilityRequest(booking);
+                setIsBookingModalOpen(false);
+            };
+
+            return (
+                <div className="min-h-screen flex flex-col selection:bg-azure-500 selection:text-white">
+                    <header className="sticky top-0 z-40 w-full backdrop-blur-custom bg-white/90 dark:bg-stone-950/90 border-b border-stone-200/80 dark:border-stone-800/80 transition-colors">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex items-center justify-between h-20">
+                                
+                                {/* Logo */}
+                                <button 
+                                    onClick={() => navigateTo('home')}
+                                    className="text-left group flex items-center space-x-3 focus:outline-none"
+                                >
+                                    <Icons.Logo />
+                                    <div>
+                                        <span className="block font-serif text-2xl tracking-wider font-bold text-stone-900 dark:text-stone-50 group-hover:text-azure-600 dark:group-hover:text-azure-400 transition-colors leading-tight">
+                                            AZURE
+                                        </span>
+                                        <span className="block text-[10px] uppercase tracking-[0.25em] text-amber-600 dark:text-amber-400 font-bold">
+                                            Hotel & Suites
+                                        </span>
+                                    </div>
+                                </button>
+
+                                {/* Desktop Navigation */}
+                                <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
+                                    {[
+                                        { id: 'home', label: 'Home' },
+                                        { id: 'rooms', label: 'Rooms' },
+                                        { id: 'gallery', label: 'Gallery' },
+                                        { id: 'reviews', label: 'Reviews' },
+                                        { id: 'about', label: 'About' },
+                                        { id: 'contact', label: 'Contact' }
+                                    ].map((tab) => (
+                                        <button
+                                            key={tab.id}
+                                            onClick={() => navigateTo(tab.id)}
+                                            className={`px-3 lg:px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                                                currentPage === tab.id
+                                                    ? 'bg-azure-50 text-azure-800 dark:bg-azure-950/60 dark:text-azure-300 font-semibold'
+                                                    : 'text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white hover:bg-stone-100 dark:hover:bg-stone-800/50'
+                                            }`}
+                                        >
+                                            {tab.label}
+                                        </button>
+                                    ))}
+                                </nav>
+
+                                {/* Desktop Right CTAs & Theme Toggle */}
+                                <div className="hidden md:flex items-center space-x-3">
+                                    <button
+                                        onClick={() => setDarkMode(!darkMode)}
+                                        className="p-2.5 rounded-full text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors focus:outline-none"
+                                        title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                                        aria-label="Toggle dark mode"
+                                    >
+                                        {darkMode ? <Icons.Sun /> : <Icons.Moon />}
+                                    </button>
+
+                                    {/* Instagram Button */}
+                                    <a
+                                        href={HOTEL_DATA.instagramUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center space-x-2 text-xs font-semibold px-3.5 py-2 rounded-full bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-amber-500/10 text-pink-600 dark:text-pink-400 hover:bg-pink-500/20 transition-all border border-pink-500/20"
+                                        title="Explore Azure Hotel Instagram"
+                                    >
+                                        <Icons.Instagram />
+                                        <span>Wanna explore?</span>
+                                    </a>
+
+                                    {/* Check Availability CTA */}
+                                    <button
+                                        onClick={() => setIsBookingModalOpen(true)}
+                                        className="px-5 py-2.5 rounded-full bg-azure-800 hover:bg-azure-900 text-white dark:bg-azure-700 dark:hover:bg-azure-600 font-medium text-sm shadow-sm hover:shadow transition-all transform active:scale-95"
+                                    >
+                                        Check Availability
+                                    </button>
+                                </div>
+
+                                {/* Mobile Controls */}
+                                <div className="flex items-center space-x-2 md:hidden">
+                                    <button
+                                        onClick={() => setDarkMode(!darkMode)}
+                                        className="p-2 rounded-full text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800"
+                                        aria-label="Toggle theme"
+                                    >
+                                        {darkMode ? <Icons.Sun /> : <Icons.Moon />}
+                                    </button>
+
+                                    <button
+                                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                                        className="p-2 rounded-lg text-stone-700 dark:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-800"
+                                        aria-label="Toggle menu"
+                                    >
+                                        {mobileMenuOpen ? <Icons.Close /> : <Icons.Menu />}
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        {/* Mobile Drawer */}
+                        {mobileMenuOpen && (
+                            <div className="md:hidden border-b border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-950 px-4 pt-2 pb-6 space-y-2 animate-fadeIn">
+                                {[
+                                    { id: 'home', label: 'Home' },
+                                    { id: 'rooms', label: 'Rooms & Accommodation' },
+                                    { id: 'gallery', label: 'Photo Gallery' },
+                                    { id: 'reviews', label: 'Guest Reviews' },
+                                    { id: 'about', label: 'About Azure' },
+                                    { id: 'contact', label: 'Contact Us' }
+                                ].map((tab) => (
+                                    <button
+                                        key={tab.id}
+                                        onClick={() => navigateTo(tab.id)}
+                                        className={`block w-full text-left px-4 py-3 rounded-lg text-base font-medium transition-colors ${
+                                            currentPage === tab.id
+                                                ? 'bg-azure-50 text-azure-800 dark:bg-azure-950 dark:text-azure-300 font-semibold'
+                                                : 'text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-900'
+                                        }`}
+                                    >
+                                        {tab.label}
+                                    </button>
+                                ))}
+
+                                <div className="pt-4 border-t border-stone-200 dark:border-stone-800 space-y-2">
+                                    <a
+                                        href={HOTEL_DATA.instagramUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center justify-center space-x-2 w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium text-sm shadow"
+                                    >
+                                        <Icons.Instagram />
+                                        <span>Wanna explore? View Instagram</span>
+                                    </a>
+
+                                    <button
+                                        onClick={() => {
+                                            setMobileMenuOpen(false);
+                                            setIsBookingModalOpen(true);
+                                        }}
+                                        className="w-full py-3 rounded-xl bg-azure-800 dark:bg-azure-700 text-white font-medium text-sm shadow"
+                                    >
+                                        Check Availability
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                    </header>
+
+                    <main className="flex-1">
+                        {currentPage === 'home' && (
+                            <HomePage 
+                                navigateTo={navigateTo} 
+                                openBooking={() => setIsBookingModalOpen(true)}
+                                booking={booking}
+                                setBooking={setBooking}
+                            />
+                        )}
+                        {currentPage === 'rooms' && (
+                            <RoomsPage 
+                                openBooking={() => setIsBookingModalOpen(true)} 
+                                setBooking={setBooking}
+                            />
+                        )}
+                        {currentPage === 'gallery' && <GalleryPage />}
+                        {currentPage === 'reviews' && <ReviewsPage />}
+                        {currentPage === 'about' && <AboutPage navigateTo={navigateTo} />}
+                        {currentPage === 'contact' && <ContactPage />}
+                    </main>
+
+                    <FloatingActions />
+                    <Footer navigateTo={navigateTo} />
+
+                    {isBookingModalOpen && (
+                        <BookingModal 
+                            isOpen={isBookingModalOpen} 
+                            onClose={() => setIsBookingModalOpen(false)}
+                            booking={booking}
+                            setBooking={setBooking}
+                            handleModalSubmit={handleModalSubmit}
+                        />
+                    )}
+                </div>
+            );
+        }
+
+        function HomePage({ navigateTo, openBooking, booking, setBooking }) {
+            const heroImage = IMAGE_MANIFEST.find(img => img.id === 'azure-05') || IMAGE_MANIFEST[0];
+            const featureRooms = IMAGE_MANIFEST.filter(img => img.role === 'room').slice(0, 3);
+            const featuredReviews = REVIEWS_DATASET.slice(0, 3);
+
+            const handleInlineCheck = (e) => {
+                e.preventDefault();
+                sendWhatsAppAvailabilityRequest(booking);
+            };
+
+            return (
+                <div className="space-y-16 md:space-y-24">
+                    
+                    {/* Hero Section with clear HD rendering */}
+                    <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-stone-900">
+                        <div className="absolute inset-0 z-0">
+                            <HDImage 
+                                src={heroImage.url} 
+                                fallback={heroImage.fallbackUrl}
+                                alt={heroImage.alt}
+                                className="w-full h-full object-cover object-center"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/50 to-stone-950/30" />
+                        </div>
+
+                        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center text-white space-y-6 py-20">
+                            <span className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-xs font-semibold uppercase tracking-widest backdrop-blur-md">
+                                <Icons.Crown />
+                                <span>Lagos, Nigeria • 4.3 ★ Google Rated</span>
+                            </span>
+
+                            <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-tight text-stone-100">
+                                Azure Hotel & Suites
+                            </h1>
+
+                            <p className="font-serif italic text-xl sm:text-2xl text-amber-200/95 max-w-2xl mx-auto font-normal">
+                                "{HOTEL_DATA.tagline}"
+                            </p>
+
+                            <p className="text-stone-200 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed drop-shadow-sm">
+                                {HOTEL_DATA.positioning}
+                            </p>
+
+                            <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+                                <button
+                                    onClick={openBooking}
+                                    className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-base shadow-lg transition-all transform hover:-translate-y-0.5"
+                                >
+                                    Check Availability
+                                </button>
+
+                                <a
+                                    href={HOTEL_DATA.instagramUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/30 backdrop-blur-md font-medium text-base inline-flex items-center justify-center space-x-2 transition-all"
+                                >
+                                    <Icons.Instagram />
+                                    <span>Wanna explore?</span>
+                                </a>
+                            </div>
+
+                            {/* Trust metrics */}
+                            <div className="pt-10 grid grid-cols-2 sm:grid-cols-3 gap-6 max-w-xl mx-auto border-t border-white/20 text-stone-200 text-xs">
+                                <div>
+                                    <span className="block font-serif text-2xl font-bold text-white">4.3 / 5</span>
+                                    <span className="text-stone-300">112 Google Reviews</span>
+                                </div>
+                                <div>
+                                    <span className="block font-serif text-2xl font-bold text-white">24/7</span>
+                                    <span className="text-stone-300">Power & Security</span>
+                                </div>
+                                <div className="col-span-2 sm:col-span-1">
+                                    <span className="block font-serif text-2xl font-bold text-white">Agege, Lagos</span>
+                                    <span className="text-stone-300">Prime Location</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Quick Availability Bar */}
+                    <section className="max-w-6xl mx-auto px-4 -mt-12 relative z-20">
+                        <div className="bg-white dark:bg-stone-900 rounded-2xl p-6 shadow-xl border border-stone-200/80 dark:border-stone-800">
+                            <form onSubmit={handleInlineCheck} className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                                <div>
+                                    <label className="block text-xs font-semibold uppercase tracking-wider text-stone-500 dark:text-stone-400 mb-1">Check-In</label>
+                                    <input 
+                                        type="date" 
+                                        value={booking.checkIn}
+                                        onChange={(e) => setBooking({...booking, checkIn: e.target.value})}
+                                        className="w-full px-3 py-2 rounded-lg bg-stone-100 dark:bg-stone-800 border border-stone-300 dark:border-stone-700 text-sm focus:outline-none focus:ring-2 focus:ring-azure-500" 
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-semibold uppercase tracking-wider text-stone-500 dark:text-stone-400 mb-1">Check-Out</label>
+                                    <input 
+                                        type="date" 
+                                        value={booking.checkOut}
+                                        onChange={(e) => setBooking({...booking, checkOut: e.target.value})}
+                                        className="w-full px-3 py-2 rounded-lg bg-stone-100 dark:bg-stone-800 border border-stone-300 dark:border-stone-700 text-sm focus:outline-none focus:ring-2 focus:ring-azure-500" 
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-semibold uppercase tracking-wider text-stone-500 dark:text-stone-400 mb-1">Guests</label>
+                                    <select 
+                                        value={booking.guests}
+                                        onChange={(e) => setBooking({...booking, guests: e.target.value})}
+                                        className="w-full px-3 py-2 rounded-lg bg-stone-100 dark:bg-stone-800 border border-stone-300 dark:border-stone-700 text-sm focus:outline-none focus:ring-2 focus:ring-azure-500"
+                                    >
+                                        <option>1 Adult</option>
+                                        <option>2 Adults</option>
+                                        <option>Family Stay</option>
+                                    </select>
+                                </div>
+                                <button 
+                                    type="submit"
+                                    className="w-full py-2.5 rounded-lg bg-azure-800 hover:bg-azure-900 dark:bg-azure-700 text-white font-medium text-sm transition-all inline-flex items-center justify-center space-x-2"
+                                >
+                                    <Icons.WhatsApp />
+                                    <span>Check Availability</span>
+                                </button>
+                            </form>
+                        </div>
+                    </section>
+
+                    {/* Features Intro */}
+                    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            <div className="space-y-6">
+                                <div className="inline-flex items-center space-x-2 text-azure-700 dark:text-azure-400 font-semibold text-xs uppercase tracking-widest">
+                                    <Icons.Award />
+                                    <span>Hospitality Redefined</span>
+                                </div>
+                                <h2 className="font-serif text-3xl sm:text-5xl font-bold text-stone-900 dark:text-stone-50 leading-tight">
+                                    A Quiet Sanctuary in New Oko-Oba, Lagos
+                                </h2>
+                                <p className="text-stone-600 dark:text-stone-300 leading-relaxed">
+                                    Designed for total relaxation and pristine executive comfort, Azure Hotel & Suites delivers Island-standard hospitality right in the heart of Agege. Whether lodging for business trips, leisure getaways, or photo shoots, our beautifully clean environment ensures an unmatched stay.
+                                </p>
+                                <div className="grid grid-cols-2 gap-4 pt-2">
+                                    <div className="p-4 rounded-xl bg-stone-100 dark:bg-stone-900 border border-stone-200 dark:border-stone-800">
+                                        <Icons.Shield />
+                                        <h3 className="font-bold text-stone-900 dark:text-stone-100 text-sm mt-2">Decent Security</h3>
+                                        <p className="text-stone-500 text-xs mt-1">Secured compound with spacious parking.</p>
+                                    </div>
+                                    <div className="p-4 rounded-xl bg-stone-100 dark:bg-stone-900 border border-stone-200 dark:border-stone-800">
+                                        <Icons.Crown />
+                                        <h3 className="font-bold text-stone-900 dark:text-stone-100 text-sm mt-2">Polite Staff</h3>
+                                        <p className="text-stone-500 text-xs mt-1">Well-mannered team ready with a cheerful smile.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <HDImage 
+                                    src={IMAGE_MANIFEST[1].url} 
+                                    fallback={IMAGE_MANIFEST[1].fallbackUrl}
+                                    alt={IMAGE_MANIFEST[1].alt} 
+                                    className="rounded-2xl shadow-md h-64 w-full object-cover" 
+                                />
+                                <HDImage 
+                                    src={IMAGE_MANIFEST[7].url} 
+                                    fallback={IMAGE_MANIFEST[7].fallbackUrl}
+                                    alt={IMAGE_MANIFEST[7].alt} 
+                                    className="rounded-2xl shadow-md h-64 w-full object-cover mt-6" 
+                                />
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Featured Accommodation */}
+                    <section className="bg-stone-100 dark:bg-stone-900/50 py-16">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+                            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                                <div>
+                                    <span className="text-xs font-semibold uppercase tracking-widest text-azure-700 dark:text-azure-400">Accommodations</span>
+                                    <h2 className="font-serif text-3xl sm:text-4xl font-bold text-stone-900 dark:text-stone-100 mt-1">
+                                        Crafted Guest Rooms
+                                    </h2>
+                                </div>
+                                <button
+                                    onClick={() => navigateTo('rooms')}
+                                    className="inline-flex items-center space-x-1 text-sm font-semibold text-azure-700 dark:text-azure-400 hover:text-azure-900 transition-colors"
+                                >
+                                    <span>View All Accommodation</span>
+                                    <Icons.ChevronRight />
+                                </button>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                {featureRooms.map((room, idx) => (
+                                    <div key={room.id} className="bg-white dark:bg-stone-900 rounded-2xl overflow-hidden shadow-sm border border-stone-200 dark:border-stone-800 group hover:shadow-md transition-all">
+                                        <div className="h-56 overflow-hidden relative bg-stone-200 dark:bg-stone-800">
+                                            <HDImage 
+                                                src={room.url} 
+                                                fallback={room.fallbackUrl}
+                                                alt={room.alt} 
+                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                                            />
+                                            <span className="absolute top-3 right-3 px-3 py-1 rounded-full bg-stone-900/80 text-white text-xs font-semibold backdrop-blur-md">
+                                                Verified Photo
+                                            </span>
+                                        </div>
+                                        <div className="p-6 space-y-3">
+                                            <h3 className="font-serif text-xl font-bold text-stone-900 dark:text-stone-100">
+                                                Executive Suite Room {idx + 1}
+                                            </h3>
+                                            <p className="text-xs text-stone-500 dark:text-stone-400 leading-relaxed">
+                                                Clean, quiet space featuring soft ambient lighting, plush bed linen, and full ensuite bathroom facilities.
+                                            </p>
+                                            <div className="pt-3 border-t border-stone-100 dark:border-stone-800 flex items-center justify-between">
+                                                <span className="text-xs text-stone-400">Room 201 Series</span>
+                                                <button 
+                                                    onClick={() => {
+                                                        setBooking({...booking, roomType: `Executive Room ${idx + 1}`});
+                                                        openBooking();
+                                                    }} 
+                                                    className="text-xs font-bold text-azure-700 dark:text-azure-400 hover:underline flex items-center space-x-1"
+                                                >
+                                                    <span>Check Availability</span>
+                                                    <Icons.ChevronRight />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Verified Reviews Teaser */}
+                    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                        <div className="text-center max-w-2xl mx-auto space-y-3">
+                            <span className="text-xs font-semibold uppercase tracking-widest text-amber-600 dark:text-amber-400">Verified Google Feedback</span>
+                            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-stone-900 dark:text-stone-100">
+                                Loved by Guests Across Lagos
+                            </h2>
+                            <p className="text-sm text-stone-500">
+                                Rated <strong>4.3 / 5</strong> from 112 Google reviews. Here is what guests directly say about their experience.
+                            </p>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {featuredReviews.map((rev) => (
+                                <div key={rev.id} className="p-6 rounded-2xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 space-y-4 shadow-sm flex flex-col justify-between">
+                                    <div className="space-y-3">
+                                        <div className="flex items-center space-x-1">
+                                            {[...Array(5)].map((_, i) => <Icons.Star key={i} />)}
+                                        </div>
+                                        <p className="text-xs text-stone-600 dark:text-stone-300 italic leading-relaxed">
+                                            "{rev.text}"
+                                        </p>
+                                    </div>
+                                    <div className="pt-3 border-t border-stone-100 dark:border-stone-800 flex items-center justify-between">
+                                        <span className="font-bold text-xs text-stone-900 dark:text-stone-100">{rev.name}</span>
+                                        <span className="text-[10px] text-stone-400">{rev.date}</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="text-center pt-4">
+                            <button
+                                onClick={() => navigateTo('reviews')}
+                                className="px-6 py-3 rounded-full bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 font-semibold text-sm hover:opacity-90 transition-opacity"
+                            >
+                                Read All Selected Reviews →
+                            </button>
+                        </div>
+                    </section>
+
+                    {/* Location & Instagram Section */}
+                    <section className="bg-stone-900 text-white py-16">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            <div className="space-y-6">
+                                <span className="text-xs font-semibold uppercase tracking-widest text-amber-400">Convenient Location</span>
+                                <h2 className="font-serif text-3xl sm:text-4xl font-bold">Visit Azure Hotel & Suites</h2>
+                                <p className="text-stone-300 text-sm leading-relaxed">
+                                    Located in New Oko-Oba, Abule Egba, Agege, Lagos. Easy accessibility, peaceful surroundings, and secure parking area for all staying guests.
+                                </p>
+
+                                <div className="space-y-3 text-sm">
+                                    <div className="flex items-start space-x-3">
+                                        <Icons.MapPin />
+                                        <span>{HOTEL_DATA.address}</span>
+                                    </div>
+                                    <div className="flex items-center space-x-3">
+                                        <Icons.Phone />
+                                        <span>{HOTEL_DATA.phone}</span>
+                                    </div>
+                                </div>
+
+                                <div className="pt-2 flex flex-wrap items-center gap-4">
+                                    <a
+                                        href={HOTEL_DATA.whatsappUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-sm inline-flex items-center space-x-2 shadow-lg"
+                                    >
+                                        <Icons.WhatsApp />
+                                        <span>Chat on WhatsApp</span>
+                                    </a>
+
+                                    <a
+                                        href={HOTEL_DATA.instagramUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="px-6 py-3 rounded-full bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 hover:opacity-90 text-white font-medium text-sm inline-flex items-center space-x-2 shadow-lg"
+                                    >
+                                        <Icons.Instagram />
+                                        <span>Wanna explore? View Instagram</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div className="rounded-2xl overflow-hidden h-72 bg-stone-800 relative border border-stone-700 flex items-center justify-center p-6 text-center">
+                                <div className="space-y-2">
+                                    <Icons.MapPin />
+                                    <p className="font-serif font-bold text-lg">New Oko-Oba, Agege, Lagos</p>
+                                    <p className="text-xs text-stone-400">54 Progress College Rd, Abule Egba</p>
+                                    <a 
+                                        href={`https://maps.google.com/?q=${encodeURIComponent(HOTEL_DATA.address)}`} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="inline-block mt-3 px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-xs text-white transition-colors"
+                                    >
+                                        Open in Google Maps
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            );
+        }
+
+        function RoomsPage({ openBooking, setBooking }) {
+            const roomImages = IMAGE_MANIFEST.filter(img => img.role === 'room');
+
+            return (
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+                    <div className="text-center max-w-2xl mx-auto space-y-3">
+                        <span className="text-xs font-semibold uppercase tracking-widest text-azure-700 dark:text-azure-400">Lodging & Comfort</span>
+                        <h1 className="font-serif text-4xl sm:text-5xl font-bold text-stone-900 dark:text-stone-100">Guest Accommodation</h1>
+                        <p className="text-stone-600 dark:text-stone-400 text-sm">
+                            Cozy, budget-friendly stays and premium executive rooms crafted specifically for guest relaxation and maximum privacy.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {roomImages.map((img, i) => (
+                            <div key={img.id} className="bg-white dark:bg-stone-900 rounded-2xl overflow-hidden shadow-sm border border-stone-200 dark:border-stone-800 flex flex-col justify-between">
+                                <div>
+                                    <div className="h-64 overflow-hidden relative bg-stone-200 dark:bg-stone-800">
+                                        <HDImage 
+                                            src={img.url} 
+                                            fallback={img.fallbackUrl}
+                                            alt={img.alt} 
+                                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" 
+                                        />
+                                    </div>
+                                    <div className="p-6 space-y-3">
+                                        <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300">
+                                            Option #{i + 1}
+                                        </span>
+                                        <h2 className="font-serif text-xl font-bold text-stone-900 dark:text-stone-100">{img.title}</h2>
+                                        <p className="text-xs text-stone-500 dark:text-stone-400 leading-relaxed">
+                                            Clean environment, air-conditioned interior, double plush mirrors, and full privacy.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="p-6 pt-0">
+                                    <button 
+                                        onClick={() => {
+                                            setBooking(prev => ({ ...prev, roomType: img.title }));
+                                            openBooking();
+                                        }}
+                                        className="w-full py-3 rounded-xl bg-azure-800 hover:bg-azure-900 dark:bg-azure-700 text-white font-medium text-xs transition-colors flex items-center justify-center space-x-2"
+                                    >
+                                        <Icons.WhatsApp />
+                                        <span>Check Availability via WhatsApp</span>
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        }
+
+        function GalleryPage() {
+            const [filter, setFilter] = useState('all');
+            const [lightboxIndex, setLightboxIndex] = useState(null);
+
+            const filteredImages = useMemo(() => {
+                if (filter === 'all') return IMAGE_MANIFEST;
+                return IMAGE_MANIFEST.filter(img => img.role === filter);
+            }, [filter]);
+
+            return (
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
+                    <div className="text-center max-w-2xl mx-auto space-y-3">
+                        <span className="text-xs font-semibold uppercase tracking-widest text-azure-700 dark:text-azure-400">Official Photography</span>
+                        <h1 className="font-serif text-4xl sm:text-5xl font-bold text-stone-900 dark:text-stone-100">Hotel Photo Gallery</h1>
+                        <p className="text-stone-600 dark:text-stone-400 text-sm">
+                            Browse through authentic photographs depicting our rooms, walkways, reception, dining area, and outdoor compound.
+                        </p>
+                    </div>
+
+                    {/* Filter Tabs */}
+                    <div className="flex flex-wrap justify-center gap-2">
+                        {[
+                            { id: 'all', label: 'All Photos' },
+                            { id: 'room', label: 'Rooms' },
+                            { id: 'interiors', label: 'Interiors & Reception' },
+                            { id: 'dining', label: 'Dining' },
+                            { id: 'exterior', label: 'Exterior & Compound' }
+                        ].map(f => (
+                            <button
+                                key={f.id}
+                                onClick={() => setFilter(f.id)}
+                                className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${
+                                    filter === f.id
+                                        ? 'bg-azure-800 text-white dark:bg-azure-600'
+                                        : 'bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-300'
+                                }`}
+                            >
+                                {f.label}
+                            </button>
+                        ))}
+                    </div>
+
+                    {/* Image Grid */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        {filteredImages.map((img, idx) => (
+                            <div 
+                                key={img.id}
+                                onClick={() => setLightboxIndex(idx)}
+                                className="group relative h-64 rounded-2xl overflow-hidden cursor-pointer bg-stone-200 dark:bg-stone-800 shadow-sm"
+                            >
+                                <HDImage 
+                                    src={img.url} 
+                                    fallback={img.fallbackUrl}
+                                    alt={img.alt} 
+                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                                    <span className="text-xs text-white font-medium">{img.title}</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Lightbox Dialog */}
+                    {lightboxIndex !== null && (
+                        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+                            <button 
+                                onClick={() => setLightboxIndex(null)}
+                                className="absolute top-6 right-6 p-3 rounded-full bg-white/10 text-white hover:bg-white/20"
+                            >
+                                <Icons.Close />
+                            </button>
+
+                            <button 
+                                onClick={() => setLightboxIndex((lightboxIndex - 1 + filteredImages.length) % filteredImages.length)}
+                                className="absolute left-4 p-3 rounded-full bg-white/10 text-white hover:bg-white/20"
+                            >
+                                <Icons.ChevronLeft />
+                            </button>
+
+                            <div className="max-w-4xl max-h-[85vh] p-2 text-center space-y-3">
+                                <HDImage 
+                                    src={filteredImages[lightboxIndex].url} 
+                                    fallback={filteredImages[lightboxIndex].fallbackUrl}
+                                    alt={filteredImages[lightboxIndex].alt} 
+                                    className="max-h-[75vh] w-auto mx-auto rounded-xl object-contain shadow-2xl"
+                                />
+                                <p className="text-stone-200 text-sm font-medium">{filteredImages[lightboxIndex].title}</p>
+                            </div>
+
+                            <button 
+                                onClick={() => setLightboxIndex((lightboxIndex + 1) % filteredImages.length)}
+                                className="absolute right-4 p-3 rounded-full bg-white/10 text-white hover:bg-white/20"
+                            >
+                                <Icons.ChevronRight />
+                            </button>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        function ReviewsPage() {
+            const [search, setSearch] = useState('');
+            const [selectedTopic, setSelectedTopic] = useState(null);
+            const [visibleCount, setVisibleCount] = useState(9);
+
+            const filteredReviews = useMemo(() => {
+                return REVIEWS_DATASET.filter(rev => {
+                    const matchesSearch = rev.name.toLowerCase().includes(search.toLowerCase()) || 
+                                          rev.text.toLowerCase().includes(search.toLowerCase());
+                    const matchesTopic = selectedTopic ? rev.topics.includes(selectedTopic) : true;
+                    return matchesSearch && matchesTopic;
+                });
+            }, [search, selectedTopic]);
+
+            return (
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
+                    <div className="bg-stone-900 text-white rounded-3xl p-8 sm:p-12 text-center space-y-4">
+                        <span className="text-xs uppercase tracking-widest text-amber-400 font-semibold">Verified Feedback</span>
+                        <h1 className="font-serif text-4xl sm:text-5xl font-bold">Guest Reviews & Ratings</h1>
+                        <p className="text-stone-300 text-sm max-w-xl mx-auto">
+                            Selected positive guest feedback retrieved directly from Google Reviews for Azure Hotel & Suites.
+                        </p>
+                        <div className="pt-4 inline-flex items-center space-x-3 bg-white/10 px-6 py-3 rounded-full backdrop-blur-md">
+                            <span className="font-serif text-3xl font-bold text-amber-400">4.3 / 5</span>
+                            <div className="text-left border-l border-white/20 pl-3">
+                                <div className="flex text-amber-400"><Icons.Star /><Icons.Star /><Icons.Star /><Icons.Star /><Icons.Star /></div>
+                                <span className="text-xs text-stone-300">112 Google Reviews</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="space-y-3">
+                        <span className="block text-xs font-semibold text-stone-500 uppercase tracking-wider">Filter by Mentioned Topics:</span>
+                        <div className="flex flex-wrap gap-2">
+                            <button
+                                onClick={() => setSelectedTopic(null)}
+                                className={`px-3 py-1.5 rounded-full text-xs font-medium ${
+                                    selectedTopic === null ? 'bg-azure-800 text-white' : 'bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-300'
+                                }`}
+                            >
+                                All Reviews ({REVIEWS_DATASET.length})
+                            </button>
+                            {MENTIONED_TOPICS.map(topic => (
+                                <button
+                                    key={topic.label}
+                                    onClick={() => setSelectedTopic(selectedTopic === topic.label ? null : topic.label)}
+                                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
+                                        selectedTopic === topic.label
+                                            ? 'bg-azure-800 text-white'
+                                            : 'bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-300'
+                                    }`}
+                                >
+                                    {topic.label} ({topic.count})
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="relative max-w-md">
+                        <input
+                            type="text"
+                            placeholder="Search in reviews..."
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-sm focus:outline-none focus:ring-2 focus:ring-azure-500"
+                        />
+                        <div className="absolute left-3 top-3 text-stone-400">
+                            <Icons.Search />
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {filteredReviews.slice(0, visibleCount).map((rev) => (
+                            <div key={rev.id} className="p-6 rounded-2xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 flex flex-col justify-between shadow-sm">
+                                <div className="space-y-3">
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex text-amber-400">
+                                            {[...Array(rev.rating)].map((_, i) => <Icons.Star key={i} />)}
+                                        </div>
+                                        <span className="text-[10px] text-stone-400 font-medium">Google Review</span>
+                                    </div>
+                                    <p className="text-xs text-stone-700 dark:text-stone-300 leading-relaxed italic">
+                                        "{rev.text}"
+                                    </p>
+                                </div>
+                                <div className="pt-4 border-t border-stone-100 dark:border-stone-800 mt-4 flex items-center justify-between">
+                                    <div>
+                                        <h4 className="font-bold text-xs text-stone-900 dark:text-stone-100">{rev.name}</h4>
+                                        <span className="text-[10px] text-stone-400">{rev.date}</span>
+                                    </div>
+                                    {rev.tripType && (
+                                        <span className="px-2 py-0.5 rounded bg-stone-100 dark:bg-stone-800 text-[10px] text-stone-500">
+                                            {rev.tripType}
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {visibleCount < filteredReviews.length && (
+                        <div className="text-center pt-6">
+                            <button
+                                onClick={() => setVisibleCount(prev => prev + 9)}
+                                className="px-6 py-3 rounded-full bg-stone-200 dark:bg-stone-800 text-stone-800 dark:text-stone-200 font-semibold text-xs hover:bg-stone-300 transition-colors"
+                            >
+                                Load More Guest Reviews
+                            </button>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        function AboutPage({ navigateTo }) {
+            return (
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+                    <div className="text-center max-w-3xl mx-auto space-y-4">
+                        <span className="text-xs font-semibold uppercase tracking-widest text-azure-700 dark:text-azure-400">About Azure</span>
+                        <h1 className="font-serif text-4xl sm:text-5xl font-bold text-stone-900 dark:text-stone-100">
+                            Crafted For Your Comfort
+                        </h1>
+                        <p className="text-stone-600 dark:text-stone-300 text-sm leading-relaxed">
+                            {HOTEL_DATA.positioning}
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                        <HDImage 
+                            src={IMAGE_MANIFEST[10].url} 
+                            fallback={IMAGE_MANIFEST[10].fallbackUrl}
+                            alt="Azure Hotel Facade" 
+                            className="rounded-3xl shadow-lg h-96 w-full object-cover" 
+                        />
+                        <div className="space-y-6">
+                            <h2 className="font-serif text-3xl font-bold text-stone-900 dark:text-stone-100">
+                                Premium Hospitality Standard in Agege
+                            </h2>
+                            <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed">
+                                Azure Hotel & Suites was meticulously planned to bring luxury accommodation, quiet ambience, and top-class guest service to New Oko-Oba, Agege. From spacious corridors to our serene courtyard, we focus on every detail to deliver a home-away-from-home experience.
+                            </p>
+                            <div className="space-y-3">
+                                <div className="flex items-center space-x-3 text-sm text-stone-700 dark:text-stone-300">
+                                    <Icons.Check />
+                                    <span>Clean walkways, rooms, and lobby</span>
+                                </div>
+                                <div className="flex items-center space-x-3 text-sm text-stone-700 dark:text-stone-300">
+                                    <Icons.Check />
+                                    <span>Decent security & spacious compound parking</span>
+                                </div>
+                                <div className="flex items-center space-x-3 text-sm text-stone-700 dark:text-stone-300">
+                                    <Icons.Check />
+                                    <span>24/7 staff support with polite service</span>
+                                </div>
+                            </div>
+                            <button
+                                onClick={() => navigateTo('contact')}
+                                className="px-6 py-3 rounded-full bg-azure-800 text-white dark:bg-azure-700 font-semibold text-xs inline-flex items-center space-x-2"
+                            >
+                                <span>Contact Our Front Desk</span>
+                                <Icons.ChevronRight />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function ContactPage() {
+            const [contactForm, setContactForm] = useState({
+                name: '',
+                phone: '',
+                message: ''
+            });
+
+            const handleContactSubmit = (e) => {
+                e.preventDefault();
+                const msg = `Hello Azure Hotel & Suites,\n\nName: ${contactForm.name}\nPhone: ${contactForm.phone}\n\nMessage:\n${contactForm.message}`;
+                const url = `https://wa.me/${HOTEL_DATA.whatsapp}?text=${encodeURIComponent(msg)}`;
+                window.open(url, '_blank');
+            };
+
+            return (
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+                    <div className="text-center max-w-2xl mx-auto space-y-3">
+                        <span className="text-xs font-semibold uppercase tracking-widest text-azure-700 dark:text-azure-400">Reach Us Directly</span>
+                        <h1 className="font-serif text-4xl sm:text-5xl font-bold text-stone-900 dark:text-stone-100">Contact & Location</h1>
+                        <p className="text-stone-600 dark:text-stone-400 text-sm">
+                            Have questions or need assistance with your reservation? Contact Azure Hotel & Suites directly.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                        {/* Direct Details */}
+                        <div className="space-y-8 bg-white dark:bg-stone-900 p-8 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm">
+                            <div>
+                                <h3 className="font-serif text-2xl font-bold text-stone-900 dark:text-stone-100 mb-4">Hotel Details</h3>
+                                <div className="space-y-4 text-sm text-stone-600 dark:text-stone-300">
+                                    <div className="flex items-start space-x-3">
+                                        <Icons.MapPin />
+                                        <span>{HOTEL_DATA.address}</span>
+                                    </div>
+                                    <div className="flex items-center space-x-3">
+                                        <Icons.Phone />
+                                        <span>Phone: <a href={`tel:${HOTEL_DATA.phoneRaw}`} className="underline font-semibold hover:text-azure-600">{HOTEL_DATA.phone}</a></span>
+                                    </div>
+                                    <div className="flex items-center space-x-3">
+                                        <Icons.WhatsApp />
+                                        <span>WhatsApp: {HOTEL_DATA.phone}</span>
+                                    </div>
+                                    <div className="flex items-center space-x-3">
+                                        <Icons.Instagram />
+                                        <span>Instagram: <a href={HOTEL_DATA.instagramUrl} target="_blank" rel="noopener noreferrer" className="underline font-semibold hover:text-pink-500">{HOTEL_DATA.instagram}</a></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="pt-6 border-t border-stone-100 dark:border-stone-800 space-y-3">
+                                <h4 className="font-bold text-stone-900 dark:text-stone-100 text-sm">Instant WhatsApp Enquiry</h4>
+                                <p className="text-xs text-stone-500">
+                                    Tap below to open a direct chat on WhatsApp with our front desk team.
+                                </p>
+                                <a
+                                    href={HOTEL_DATA.whatsappUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center justify-center space-x-2 w-full py-3.5 rounded-xl bg-emerald-600 text-white font-medium text-sm shadow hover:bg-emerald-500 transition-colors"
+                                >
+                                    <Icons.WhatsApp />
+                                    <span>Chat Directly on WhatsApp</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        {/* Direct Message Form */}
+                        <div className="bg-white dark:bg-stone-900 p-8 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm">
+                            <h3 className="font-serif text-2xl font-bold text-stone-900 dark:text-stone-100 mb-2">Send a Message</h3>
+                            <p className="text-xs text-stone-500 mb-6">
+                                Fill in your details below. Clicking send will open WhatsApp with your exact message prepared.
+                            </p>
+                            
+                            <form onSubmit={handleContactSubmit} className="space-y-4">
+                                <div>
+                                    <label className="block text-xs font-semibold uppercase text-stone-500 mb-1">Full Name</label>
+                                    <input 
+                                        type="text" 
+                                        required 
+                                        value={contactForm.name}
+                                        onChange={(e) => setContactForm({...contactForm, name: e.target.value})}
+                                        placeholder="e.g. John Doe"
+                                        className="w-full px-4 py-2.5 rounded-xl bg-stone-100 dark:bg-stone-800 border border-stone-300 dark:border-stone-700 text-sm focus:outline-none focus:ring-2 focus:ring-azure-500" 
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-semibold uppercase text-stone-500 mb-1">Phone Number</label>
+                                    <input 
+                                        type="tel" 
+                                        required 
+                                        value={contactForm.phone}
+                                        onChange={(e) => setContactForm({...contactForm, phone: e.target.value})}
+                                        placeholder="e.g. 08012345678"
+                                        className="w-full px-4 py-2.5 rounded-xl bg-stone-100 dark:bg-stone-800 border border-stone-300 dark:border-stone-700 text-sm focus:outline-none focus:ring-2 focus:ring-azure-500" 
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-semibold uppercase text-stone-500 mb-1">Message / Enquiry</label>
+                                    <textarea 
+                                        rows="4" 
+                                        required 
+                                        value={contactForm.message}
+                                        onChange={(e) => setContactForm({...contactForm, message: e.target.value})}
+                                        placeholder="I would like to inquire about room rates for next weekend..."
+                                        className="w-full px-4 py-2.5 rounded-xl bg-stone-100 dark:bg-stone-800 border border-stone-300 dark:border-stone-700 text-sm focus:outline-none focus:ring-2 focus:ring-azure-500"
+                                    ></textarea>
+                                </div>
+                                <button type="submit" className="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-sm flex items-center justify-center space-x-2 transition-all">
+                                    <Icons.WhatsApp />
+                                    <span>Send Message via WhatsApp</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function FloatingActions() {
+            return (
+                <div className="fixed bottom-6 right-6 z-50 flex flex-col sm:flex-row items-end sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
+                    <a
+                        href={HOTEL_DATA.instagramUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex items-center space-x-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white px-4 py-3 rounded-full shadow-2xl transition-all transform hover:scale-105"
+                        title="View Instagram"
+                    >
+                        <Icons.Instagram />
+                        <span className="text-xs font-bold tracking-wide">
+                            Wanna explore?
+                        </span>
+                    </a>
+
+                    <a
+                        href={HOTEL_DATA.whatsappUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-3 rounded-full shadow-2xl transition-all transform hover:scale-105"
+                        title="Chat on WhatsApp"
+                    >
+                        <Icons.WhatsApp />
+                        <span className="text-xs font-bold tracking-wide">
+                            Chat Front Desk
+                        </span>
+                    </a>
+                </div>
+            );
+        }
+
+        function BookingModal({ isOpen, onClose, booking, setBooking, handleModalSubmit }) {
+            return (
+                <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+                    <div className="bg-white dark:bg-stone-900 max-w-lg w-full rounded-3xl p-6 sm:p-8 space-y-6 relative shadow-2xl border border-stone-200 dark:border-stone-800">
+                        <button onClick={onClose} className="absolute top-5 right-5 text-stone-400 hover:text-stone-600">
+                            <Icons.Close />
+                        </button>
+
+                        <div>
+                            <span className="text-xs font-semibold uppercase text-azure-700 dark:text-azure-400">Reservation Inquiry</span>
+                            <h3 className="font-serif text-2xl font-bold text-stone-900 dark:text-stone-100 mt-1">Check Room Availability</h3>
+                            <p className="text-xs text-stone-500 mt-1">
+                                Selecting your dates will construct an instant reservation enquiry directly sent to our WhatsApp desk.
+                            </p>
+                        </div>
+
+                        <form onSubmit={handleModalSubmit} className="space-y-4">
+                            <div>
+                                <label className="block text-xs font-semibold text-stone-500 mb-1">Check-In Date</label>
+                                <input 
+                                    type="date" 
+                                    value={booking.checkIn} 
+                                    onChange={(e) => setBooking({...booking, checkIn: e.target.value})}
+                                    className="w-full px-3 py-2.5 rounded-xl bg-stone-100 dark:bg-stone-800 border border-stone-300 dark:border-stone-700 text-sm focus:outline-none focus:ring-2 focus:ring-azure-500" 
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-xs font-semibold text-stone-500 mb-1">Check-Out Date</label>
+                                <input 
+                                    type="date" 
+                                    value={booking.checkOut} 
+                                    onChange={(e) => setBooking({...booking, checkOut: e.target.value})}
+                                    className="w-full px-3 py-2.5 rounded-xl bg-stone-100 dark:bg-stone-800 border border-stone-300 dark:border-stone-700 text-sm focus:outline-none focus:ring-2 focus:ring-azure-500" 
+                                />
+                            </div>
+                            <div className="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label className="block text-xs font-semibold text-stone-500 mb-1">Guests</label>
+                                    <select 
+                                        value={booking.guests} 
+                                        onChange={(e) => setBooking({...booking, guests: e.target.value})}
+                                        className="w-full px-3 py-2.5 rounded-xl bg-stone-100 dark:bg-stone-800 border border-stone-300 dark:border-stone-700 text-sm focus:outline-none focus:ring-2 focus:ring-azure-500"
+                                    >
+                                        <option>1 Adult</option>
+                                        <option>2 Adults</option>
+                                        <option>Family Stay</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-semibold text-stone-500 mb-1">Room Preference</label>
+                                    <select 
+                                        value={booking.roomType} 
+                                        onChange={(e) => setBooking({...booking, roomType: e.target.value})}
+                                        className="w-full px-3 py-2.5 rounded-xl bg-stone-100 dark:bg-stone-800 border border-stone-300 dark:border-stone-700 text-sm focus:outline-none focus:ring-2 focus:ring-azure-500"
+                                    >
+                                        <option>Executive Room</option>
+                                        <option>Deluxe Suite</option>
+                                        <option>Presidential Room</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" className="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-sm flex items-center justify-center space-x-2 transition-all shadow-md">
+                                <Icons.WhatsApp />
+                                <span>Send Enquiry on WhatsApp</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            );
+        }
+
+        function Footer({ navigateTo }) {
+            return (
+                <footer className="bg-stone-900 text-stone-300 pt-16 pb-12 border-t border-stone-800 text-xs">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+                        <div className="space-y-3">
+                            <div className="flex items-center space-x-3">
+                                <Icons.Logo />
+                                <h3 className="font-serif text-2xl font-bold text-white">Azure Hotel & Suites</h3>
+                            </div>
+                            <p className="text-stone-400 leading-relaxed">{HOTEL_DATA.positioning}</p>
+                        </div>
+                        <div>
+                            <h4 className="font-bold text-white text-sm mb-3">Quick Navigation</h4>
+                            <ul className="space-y-2">
+                                <li><button onClick={() => navigateTo('home')} className="hover:text-amber-400">Home</button></li>
+                                <li><button onClick={() => navigateTo('rooms')} className="hover:text-amber-400">Rooms</button></li>
+                                <li><button onClick={() => navigateTo('gallery')} className="hover:text-amber-400">Gallery</button></li>
+                                <li><button onClick={() => navigateTo('reviews')} className="hover:text-amber-400">Guest Reviews</button></li>
+                                <li><button onClick={() => navigateTo('about')} className="hover:text-amber-400">About</button></li>
+                                <li><button onClick={() => navigateTo('contact')} className="hover:text-amber-400">Contact</button></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 className="font-bold text-white text-sm mb-3">Contact Information</h4>
+                            <p className="text-stone-400 mb-2">{HOTEL_DATA.address}</p>
+                            <p className="text-stone-300 font-semibold mb-1">Phone: {HOTEL_DATA.phone}</p>
+                            <p className="text-stone-300 font-semibold">Instagram: {HOTEL_DATA.instagram}</p>
+                        </div>
+                        <div>
+                            <h4 className="font-bold text-white text-sm mb-3">Guest Experience</h4>
+                            <p className="text-stone-400 mb-4">4.3 ★ Google Rated from 112 verified guest reviews in New Oko-Oba, Agege, Lagos.</p>
+                            <a 
+                                href={HOTEL_DATA.whatsappUrl} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center space-x-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-medium"
+                            >
+                                <Icons.WhatsApp />
+                                <span>WhatsApp Front Desk</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-6 border-t border-stone-800 text-center text-stone-500">
+                        <p>© {new Date().getFullYear()} Azure Hotel & Suites. All rights reserved.</p>
+                    </div>
+                </footer>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
